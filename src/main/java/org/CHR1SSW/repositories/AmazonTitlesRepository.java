@@ -5,9 +5,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 
-public interface AmazonRepository extends PagingAndSortingRepository<AmazonTitles, Integer>
+public interface AmazonTitlesRepository extends PagingAndSortingRepository<AmazonTitles, Integer>
 {
-    AmazonTitles findById(int id);
+    AmazonTitles findBySeriesNumber(int seriesNumber);
 
     @Override
     List<AmazonTitles> findAll();

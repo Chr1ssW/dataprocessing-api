@@ -1,13 +1,17 @@
 package org.CHR1SSW.services;
 
-import org.CHR1SSW.repositories.AmazonRepository;
+import org.CHR1SSW.repositories.AmazonTitlesRepository;
 import org.CHR1SSW.tables.AmazonTitles;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class AmazonTitleService
+@Service
+public class AmazonTitlesService
 {
-    AmazonRepository amazonTitleRepository;
+    @Autowired
+    AmazonTitlesRepository amazonTitleRepository;
 
     public AmazonTitles createAmazonTitle(AmazonTitles amazonTitle)
     {

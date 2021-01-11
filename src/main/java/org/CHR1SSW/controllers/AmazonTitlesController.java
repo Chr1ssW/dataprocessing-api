@@ -3,24 +3,27 @@ package org.CHR1SSW.controllers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.CHR1SSW.services.AmazonTitleService;
-import org.CHR1SSW.tables.AmazonTitles;
+import org.CHR1SSW.services.AmazonTitlesService;
+import org.CHR1SSW.tables.AmazonTitles
+        ;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "amazonTitles")
+@RequestMapping(value = "/amazonTitles")
 @Api(tags = {"amazonTitles"})
 public class AmazonTitlesController
 {
-    AmazonTitleService amazonTitleService;
+    @Autowired
+    AmazonTitlesService amazonTitlesService;
 
     @PostMapping(value = "")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Creates an amazon title")
     public void createAmazonTitle(@RequestBody AmazonTitles amazonTitle)
     {
-        this.amazonTitleService.createAmazonTitle(amazonTitle);
+        amazonTitlesService.createAmazonTitle(amazonTitle);
     }
 
     @GetMapping(value = "/{id}")
@@ -29,7 +32,7 @@ public class AmazonTitlesController
     public AmazonTitles getAmazonTitle(@ApiParam(value = "The id of the amazon title", required = true)
                                        @PathVariable("id") int id)
     {
-        return this.amazonTitleService.getAmazonTitle(id);
+        return this.amazonTitlesService.getAmazonTitle(id);
     }
 
     @GetMapping(value = "")
@@ -37,24 +40,31 @@ public class AmazonTitlesController
     @ApiOperation(value = "Returns all amazon titles")
     public Iterable<AmazonTitles> getAmazonTitle()
     {
-        return this.amazonTitleService.getAmazonTitles();
+        return this.amazonTitlesService.getAmazonTitles();
     }
 
-    @PutMapping(value = "{id}")
+    @PutMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Updates an amazon title")
     public void updateAmazonTitle(@ApiParam(value = "An amazon title", required = true)
+                                      @PathVariable("id") int id,
                                   @RequestBody AmazonTitles amazonTitle)
     {
-        this.amazonTitleService.updateAmazonTitle(amazonTitle);
+        if (amazonTitlesService.getAmazonTitle(id) != null)
+        {
+            this.amazonTitlesService.updateAmazonTitle(amazonTitle);
+        }
     }
 
-    @DeleteMapping(value = {"{id}"})
+    @DeleteMapping(value = {"/{id}"})
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Deletes and amazon title")
     public void deleteAmazonTitle(@ApiParam(value = "An amazon title", required = true)
                                   @PathVariable("id") int id)
     {
-        this.amazonTitleService.deleteAmazonTitle(id);
+        if (amazonTitlesService.getAmazonTitle(id) != null)
+        {
+            this.amazonTitlesService.deleteAmazonTitle(id);
+        }
     }
 }

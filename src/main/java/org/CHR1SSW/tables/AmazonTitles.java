@@ -2,6 +2,8 @@ package org.CHR1SSW.tables;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "amazon_main")
 public class AmazonTitles
 {
     @Id
@@ -9,7 +11,7 @@ public class AmazonTitles
     private String nameOfTheShow;
     private int yearOfRelease;
     private int numberOfSeasons;
-    private String language;
+    private String availableLanguage;
     private double imdbRating;
     private String ageOfViewers;
 
@@ -45,12 +47,12 @@ public class AmazonTitles
         this.numberOfSeasons = numberOfSeasons;
     }
 
-    public String getLanguage() {
-        return language;
+    public String getAvailableLanguage() {
+        return availableLanguage;
     }
 
-    public void setLanguage(String language) {
-        this.language = language;
+    public void setAvailableLanguage(String language) {
+        this.availableLanguage = language;
     }
 
     public double getImdbRating() {

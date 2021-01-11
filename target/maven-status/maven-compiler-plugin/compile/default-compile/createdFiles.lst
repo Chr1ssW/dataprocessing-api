@@ -1,0 +1,5 @@
+org\CHR1SSW\Main.class
+org\CHR1SSW\controllers\AmazonTitlesController.class
+org\CHR1SSW\repositories\AmazonTitlesRepository.class
+org\CHR1SSW\tables\AmazonTitles.class
+org\CHR1SSW\services\AmazonTitlesService.class
