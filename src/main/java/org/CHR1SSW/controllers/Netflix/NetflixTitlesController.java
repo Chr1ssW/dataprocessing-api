@@ -65,7 +65,7 @@ public class NetflixTitlesController
 
     @GetMapping(value = "/showId={showId}")
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Returns one Netflix title")
+    @ApiOperation(value = "Returns one Netflix title based on ID in JSON format.")
     public NetflixTitles getNetflixTitleJson(@ApiParam(value = "The id of the netflix title", required = true)
                                          @PathVariable("showId") int showId)
     {
@@ -74,7 +74,7 @@ public class NetflixTitlesController
 
     @GetMapping(value = "/showId={showId}&format=xml", produces = {"application/xml"})
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Returns one Netflix title")
+    @ApiOperation(value = "Returns one Netflix title based on ID in XML format.")
     public NetflixTitles getNetflixTitleXml(@ApiParam(value = "The id of the netflix title", required = true)
                                          @PathVariable("showId") int showId)
     {
@@ -83,7 +83,7 @@ public class NetflixTitlesController
 
     @GetMapping(value = "/title={title}&format=json")
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Returns one Netflix show from the title")
+    @ApiOperation(value = "Returns one Netflix show based on the title in JSON format.")
     public NetflixTitles getNetflixByTitleJson(@ApiParam(value = "The title of the netflix title", required = true)
                                          @PathVariable("title") String title)
     {
@@ -92,7 +92,7 @@ public class NetflixTitlesController
 
     @GetMapping(value = "/title={title}&format=xml", produces = {"application/xml"})
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Returns one Netflix show from the title")
+    @ApiOperation(value = "Returns one Netflix show based on the title in XML format.")
     public NetflixTitles getNetflixByTitleXml(@ApiParam(value = "The title of the netflix title", required = true)
                                                @PathVariable("title") String title)
     {
@@ -101,7 +101,7 @@ public class NetflixTitlesController
 
     @GetMapping(value = "/format=json")
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Returns all the Netflix titles")
+    @ApiOperation(value = "Returns all the Netflix titles in JSON format.")
     public List<NetflixTitles> getAllNetflixTitlesJson()
     {
         return netflixTitlesService.getNetflixTitles();
@@ -109,7 +109,7 @@ public class NetflixTitlesController
 
     @GetMapping(value = "/format=xml", produces = {"application/xml"})
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Returns all the Netflix titles")
+    @ApiOperation(value = "Returns all the Netflix titles in XML format.")
     public List<NetflixTitles> getAllNetflixTitlesXml()
     {
         return netflixTitlesService.getNetflixTitles();
@@ -130,7 +130,7 @@ public class NetflixTitlesController
 
     @DeleteMapping(value = {"/showId={showId}"})
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Deletes a Netflix title")
+    @ApiOperation(value = "Deletes a Netflix title ")
     public void deleteNetflixTitle(@ApiParam(value = "A Netflix title", required = true)
                                       @PathVariable("showId") int id)
     {

@@ -61,7 +61,7 @@ public class AmazonTitlesController
 
     @GetMapping(value = "/{id}&format=json")
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Returns one amazon title")
+    @ApiOperation(value = "Returns one amazon title based on ID in JSON format.")
     public AmazonTitles getAmazonTitleJson(@ApiParam(value = "The id of the amazon title", required = true)
                                        @PathVariable("id") int id)
     {

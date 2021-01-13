@@ -62,7 +62,7 @@ public class DisneyPlusTitlesController
 
     @GetMapping(value = "/id={id}&format=json")
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Returns one Disney+ title")
+    @ApiOperation(value = "Returns one Disney+ title based on ID in JSON format.")
     public DisneyPlusTitles getDisneyPlusTitleJson(@ApiParam(value = "The id of the Disney+ title", required = true)
                                                @PathVariable("id") String id)
     {
@@ -71,7 +71,7 @@ public class DisneyPlusTitlesController
 
     @GetMapping(value = "/id={id}&format=xml", produces = {"application/xml"})
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Returns one Disney+ title")
+    @ApiOperation(value = "Returns one Disney+ title based on ID in XML format.")
     public DisneyPlusTitles getDisneyPlusTitleXml(@ApiParam(value = "The id of the Disney+ title", required = true)
                                                @PathVariable("id") String id)
     {
@@ -80,7 +80,7 @@ public class DisneyPlusTitlesController
 
     @GetMapping(value = "/format=json")
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Returns all the Disney+ titles")
+    @ApiOperation(value = "Returns all the Disney+ titles in JSON format.")
     public List<DisneyPlusTitles> getAllDisneyPlusTitlesJson()
     {
         return disneyPlusTitlesService.getDisneyPlusTitles();
@@ -88,15 +88,35 @@ public class DisneyPlusTitlesController
 
     @GetMapping(value = "/format=xml", produces = {"application/xml"})
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Returns all the Disney+ titles")
-    public List<DisneyPlusTitles> getAllDisneyPlusTitles()
+    @ApiOperation(value = "Returns all the Disney+ titles in XML format.")
+    public List<DisneyPlusTitles> getAllDisneyPlusTitlesXml()
     {
         return disneyPlusTitlesService.getDisneyPlusTitles();
     }
 
+
+
+    @GetMapping(value = "/title={title}&format=json")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ApiOperation(value = "Returns Disney+ movies based on title in JSON format.")
+    public List<DisneyPlusTitles> getDisneyPlusByTitleJson(@ApiParam(value = "The title of the Disney+ movie", required = true)
+                                                       @PathVariable("title") String title)
+    {
+        return disneyPlusTitlesService.findAllByTitle(title);
+    }
+
+    @GetMapping(value = "/title={title}&format=xml", produces = {"application/xml"})
+    @ResponseStatus(value = HttpStatus.OK)
+    @ApiOperation(value = "Returns Disney+ movies based on title in XML format.")
+    public List<DisneyPlusTitles> getDisneyPlusByTitleXml(@ApiParam(value = "The title of the Disney+ movie", required = true)
+                                                           @PathVariable("title") String title)
+    {
+        return disneyPlusTitlesService.findAllByTitle(title);
+    }
+
     @PutMapping(value = {"/id={id}"})
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Updates a Disney+ title")
+    @ApiOperation(value = "Updates a Disney+ title based on ID.")
     public void updateDisneyPlusTitle(@ApiParam(value = "A Disney+ title", required = true)
                                       @PathVariable("id") String id,
                                       @RequestBody DisneyPlusTitles disneyPlusTitles)
@@ -109,7 +129,7 @@ public class DisneyPlusTitlesController
 
     @DeleteMapping(value = {"/id={id}"})
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Deletes a Disney+ title")
+    @ApiOperation(value = "Deletes a Disney+ title based on ID.")
     public void deleteDisneyPlusTitle(@ApiParam(value = "A Disney+ title", required = true)
                                   @PathVariable("id") String id)
     {
@@ -119,12 +139,5 @@ public class DisneyPlusTitlesController
         }
     }
 
-    @GetMapping(value = "/title={title}")
-    @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Returns Disney+ movies based on title")
-    public List<DisneyPlusTitles> getDisneyPlusByTitle(@ApiParam(value = "The title of the Disney+ movie", required = true)
-                                               @PathVariable("title") String title)
-    {
-        return disneyPlusTitlesService.findAllByTitle(title);
-    }
+
 }
