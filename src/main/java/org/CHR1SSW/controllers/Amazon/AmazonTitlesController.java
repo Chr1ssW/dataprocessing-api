@@ -70,16 +70,34 @@ public class AmazonTitlesController
 
     @GetMapping(value = "/{id}&format=xml", produces = {"application/xml"})
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Returns one amazon title")
+    @ApiOperation(value = "Returns one amazon title based on ID in XML format.")
     public AmazonTitles getAmazonTitleXml(@ApiParam(value = "The id of the amazon title", required = true)
                                        @PathVariable("id") int id)
     {
         return this.amazonTitlesService.getAmazonTitle(id);
     }
 
+    @GetMapping(value = "/{title}&format=xml", produces = {"application/xml"})
+    @ResponseStatus(value = HttpStatus.OK)
+    @ApiOperation(value = "Returns one amazon movie based on title in XML format.")
+    public AmazonTitles getAmazonTitleByTitleXml(@ApiParam(value = "The title of the Amazon movie", required = true)
+                                          @PathVariable("title") String title)
+    {
+        return this.amazonTitlesService.getAmazonTitleByNameOfTheShow(title);
+    }
+
+    @GetMapping(value = "/{title}&format=json")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ApiOperation(value = "Returns one amazon movie based on title in JSON format.")
+    public AmazonTitles getAmazonTitleByTitleJson(@ApiParam(value = "The title of the Amazon movie", required = true)
+                                                 @PathVariable("title") String title)
+    {
+        return this.amazonTitlesService.getAmazonTitleByNameOfTheShow(title);
+    }
+
     @GetMapping(value = "/format=json")
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Returns all amazon titles")
+    @ApiOperation(value = "Returns all amazon titles in JSON format.")
     public Iterable<AmazonTitles> getAmazonTitleJson()
     {
         return this.amazonTitlesService.getAmazonTitles();
@@ -87,7 +105,7 @@ public class AmazonTitlesController
 
     @GetMapping(value = "/format=xml", produces = {"application/xml"})
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Returns all amazon titles")
+    @ApiOperation(value = "Returns all amazon titles in XML format")
     public Iterable<AmazonTitles> getAmazonTitleXml()
     {
         return this.amazonTitlesService.getAmazonTitles();
@@ -95,7 +113,7 @@ public class AmazonTitlesController
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Updates an amazon title")
+    @ApiOperation(value = "Updates an amazon title.")
     public void updateAmazonTitle(@ApiParam(value = "An amazon title", required = true)
                                       @PathVariable("id") int id,
                                   @RequestBody AmazonTitles amazonTitle)
@@ -108,7 +126,7 @@ public class AmazonTitlesController
 
     @DeleteMapping(value = {"/{id}"})
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Deletes an amazon title")
+    @ApiOperation(value = "Deletes an amazon title.")
     public void deleteAmazonTitle(@ApiParam(value = "An amazon title", required = true)
                                   @PathVariable("id") int id)
     {

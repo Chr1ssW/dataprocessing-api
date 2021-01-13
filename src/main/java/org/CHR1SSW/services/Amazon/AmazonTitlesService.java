@@ -20,7 +20,12 @@ public class AmazonTitlesService
 
     public AmazonTitles getAmazonTitle(int id)
     {
-        return amazonTitleRepository.findOne(id);
+        return amazonTitleRepository.findById(id);
+    }
+
+    public AmazonTitles getAmazonTitleByNameOfTheShow(String title)
+    {
+        return amazonTitleRepository.findByNameOfTheShow(title);
     }
 
     public List<AmazonTitles> getAmazonTitles()

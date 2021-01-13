@@ -8,7 +8,7 @@ import java.util.List;
 public interface AmazonTitlesRepository extends PagingAndSortingRepository<AmazonTitles, Integer>
 {
     AmazonTitles findById(int seriesNumber);
-
+    AmazonTitles findByNameOfTheShow(String seriesTitle);
     @Override
     List<AmazonTitles> findAll();
 }
