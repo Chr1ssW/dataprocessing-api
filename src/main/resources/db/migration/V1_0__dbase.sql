@@ -1,5 +1,5 @@
 create TABLE IF NOT EXISTS amazon_main (
-    series_number INT NOT NULL PRIMARY KEY,
+    id INT NOT NULL PRIMARY KEY,
     name_of_the_show VARCHAR(255) NOT NULL,
     year_of_release INT NOT NULL,
     number_of_seasons INT NOT NULL,

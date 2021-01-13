@@ -1,26 +1,32 @@
-package org.CHR1SSW.tables;
+package org.CHR1SSW.tables.Amazon;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "amazon_main")
-public class AmazonTitles
-{
+public class AmazonTitles {
     @Id
-    private int seriesNumber;
+    private int id;
+    @Column
     private String nameOfTheShow;
+    @Column
     private int yearOfRelease;
+    @Column
     private int numberOfSeasons;
+    @Column
     private String availableLanguage;
+
+    @Column
     private double imdbRating;
+    @Column
     private String ageOfViewers;
 
-    public int getSeriesNumber() {
-        return seriesNumber;
+    public int getId() {
+        return id;
     }
 
-    public void setSeriesNumber(int seriesNumber) {
-        this.seriesNumber = seriesNumber;
+    public void setId(int seriesNumber) {
+        this.id = seriesNumber;
     }
 
     public String getNameOfTheShow() {
@@ -70,4 +76,5 @@ public class AmazonTitles
     public void setAgeOfViewers(String ageOfViewers) {
         this.ageOfViewers = ageOfViewers;
     }
+
 }

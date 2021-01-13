@@ -1,11 +1,10 @@
-package org.CHR1SSW.controllers;
+package org.CHR1SSW.controllers.Amazon;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.CHR1SSW.services.AmazonTitlesService;
-import org.CHR1SSW.tables.AmazonTitles
-        ;
+import org.CHR1SSW.services.Amazon.AmazonTitlesService;
+import org.CHR1SSW.tables.Amazon.AmazonTitles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +16,7 @@ public class AmazonTitlesController
 {
     @Autowired
     AmazonTitlesService amazonTitlesService;
+
 
     @PostMapping(value = "")
     @ResponseStatus(HttpStatus.CREATED)
@@ -58,7 +58,7 @@ public class AmazonTitlesController
 
     @DeleteMapping(value = {"/{id}"})
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "Deletes and amazon title")
+    @ApiOperation(value = "Deletes an amazon title")
     public void deleteAmazonTitle(@ApiParam(value = "An amazon title", required = true)
                                   @PathVariable("id") int id)
     {

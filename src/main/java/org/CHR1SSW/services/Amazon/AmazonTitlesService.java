@@ -1,7 +1,7 @@
-package org.CHR1SSW.services;
+package org.CHR1SSW.services.Amazon;
 
-import org.CHR1SSW.repositories.AmazonTitlesRepository;
-import org.CHR1SSW.tables.AmazonTitles;
+import org.CHR1SSW.repositories.Amazon.AmazonTitlesRepository;
+import org.CHR1SSW.tables.Amazon.AmazonTitles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
