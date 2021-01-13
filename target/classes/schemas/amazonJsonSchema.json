@@ -16,7 +16,8 @@
       "maximum": 2020
     },
     "numberOfSeasons": {
-      "type": "integer"
+      "type": "integer",
+      "minimum": 1
     },
     "availableLanguage": {
       "type": "string",
