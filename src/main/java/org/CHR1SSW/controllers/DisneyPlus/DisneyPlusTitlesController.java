@@ -60,16 +60,33 @@ public class DisneyPlusTitlesController
         }
     }
 
-    @GetMapping(value = "/id={id}")
+    @GetMapping(value = "/id={id}&format=json")
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Returns one Disney+ title")
-    public DisneyPlusTitles getDisneyPlusTitle(@ApiParam(value = "The id of the Disney+ title", required = true)
+    public DisneyPlusTitles getDisneyPlusTitleJson(@ApiParam(value = "The id of the Disney+ title", required = true)
                                                @PathVariable("id") String id)
     {
         return disneyPlusTitlesService.getDisneyPlusTitle(id);
     }
 
-    @GetMapping(value = "")
+    @GetMapping(value = "/id={id}&format=xml", produces = {"application/xml"})
+    @ResponseStatus(value = HttpStatus.OK)
+    @ApiOperation(value = "Returns one Disney+ title")
+    public DisneyPlusTitles getDisneyPlusTitleXml(@ApiParam(value = "The id of the Disney+ title", required = true)
+                                               @PathVariable("id") String id)
+    {
+        return disneyPlusTitlesService.getDisneyPlusTitle(id);
+    }
+
+    @GetMapping(value = "/format=json")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ApiOperation(value = "Returns all the Disney+ titles")
+    public List<DisneyPlusTitles> getAllDisneyPlusTitlesJson()
+    {
+        return disneyPlusTitlesService.getDisneyPlusTitles();
+    }
+
+    @GetMapping(value = "/format=xml", produces = {"application/xml"})
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Returns all the Disney+ titles")
     public List<DisneyPlusTitles> getAllDisneyPlusTitles()

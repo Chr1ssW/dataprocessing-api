@@ -5,6 +5,7 @@ org\CHR1SSW\tables\DisneyPlus\DisneyPlusTitles.class
 org\CHR1SSW\services\Amazon\AmazonTitlesService.class
 org\CHR1SSW\controllers\DisneyPlus\DisneyPlusTitlesController.class
 org\CHR1SSW\services\DisneyPlus\DisneyPlusTitlesService.class
+org\CHR1SSW\documentation\SwaggerConfig.class
 org\CHR1SSW\controllers\Amazon\AmazonTitlesController.class
 org\CHR1SSW\repositories\Netflix\NetflixTitlesRepository.class
 org\CHR1SSW\tables\Netflix\NetflixTitles.class

@@ -66,25 +66,51 @@ public class NetflixTitlesController
     @GetMapping(value = "/showId={showId}")
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Returns one Netflix title")
-    public NetflixTitles getNetflixTitle(@ApiParam(value = "The id of the netflix title", required = true)
+    public NetflixTitles getNetflixTitleJson(@ApiParam(value = "The id of the netflix title", required = true)
                                          @PathVariable("showId") int showId)
     {
         return netflixTitlesService.getNetflixTitle(showId);
     }
 
-    @GetMapping(value = "/title={title}")
+    @GetMapping(value = "/showId={showId}&format=xml", produces = {"application/xml"})
+    @ResponseStatus(value = HttpStatus.OK)
+    @ApiOperation(value = "Returns one Netflix title")
+    public NetflixTitles getNetflixTitleXml(@ApiParam(value = "The id of the netflix title", required = true)
+                                         @PathVariable("showId") int showId)
+    {
+        return netflixTitlesService.getNetflixTitle(showId);
+    }
+
+    @GetMapping(value = "/title={title}&format=json")
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Returns one Netflix show from the title")
-    public NetflixTitles getNetflixByTitle(@ApiParam(value = "The title of the netflix title", required = true)
+    public NetflixTitles getNetflixByTitleJson(@ApiParam(value = "The title of the netflix title", required = true)
                                          @PathVariable("title") String title)
     {
         return netflixTitlesService.getNetflixByTitle(title);
     }
 
-    @GetMapping(value = "")
+    @GetMapping(value = "/title={title}&format=xml", produces = {"application/xml"})
+    @ResponseStatus(value = HttpStatus.OK)
+    @ApiOperation(value = "Returns one Netflix show from the title")
+    public NetflixTitles getNetflixByTitleXml(@ApiParam(value = "The title of the netflix title", required = true)
+                                               @PathVariable("title") String title)
+    {
+        return netflixTitlesService.getNetflixByTitle(title);
+    }
+
+    @GetMapping(value = "/format=json")
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Returns all the Netflix titles")
-    public List<NetflixTitles> getAllNetflixTitles()
+    public List<NetflixTitles> getAllNetflixTitlesJson()
+    {
+        return netflixTitlesService.getNetflixTitles();
+    }
+
+    @GetMapping(value = "/format=xml", produces = {"application/xml"})
+    @ResponseStatus(value = HttpStatus.OK)
+    @ApiOperation(value = "Returns all the Netflix titles")
+    public List<NetflixTitles> getAllNetflixTitlesXml()
     {
         return netflixTitlesService.getNetflixTitles();
     }
