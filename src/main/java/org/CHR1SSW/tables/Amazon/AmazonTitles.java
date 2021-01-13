@@ -15,7 +15,8 @@ public class AmazonTitles {
     private int numberOfSeasons;
     @Column
     private String availableLanguage;
-
+    @Column
+    private String genres;
     @Column
     private double imdbRating;
     @Column
@@ -77,4 +78,11 @@ public class AmazonTitles {
         this.ageOfViewers = ageOfViewers;
     }
 
+    public String getGenres() {
+        return genres;
+    }
+
+    public void setGenres(String genres) {
+        this.genres = genres;
+    }
 }

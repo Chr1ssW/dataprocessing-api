@@ -1,5 +1,11 @@
 package org.CHR1SSW.controllers.Amazon;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonschema.core.exceptions.ProcessingException;
+import com.github.fge.jsonschema.core.report.ProcessingReport;
+import com.github.fge.jsonschema.main.JsonSchema;
+import com.github.fge.jsonschema.main.JsonSchemaFactory;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -8,6 +14,9 @@ import org.CHR1SSW.tables.Amazon.AmazonTitles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.File;
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/amazonTitles")
@@ -23,7 +32,31 @@ public class AmazonTitlesController
     @ApiOperation(value = "Creates an amazon title")
     public void createAmazonTitle(@RequestBody AmazonTitles amazonTitle)
     {
-        amazonTitlesService.createAmazonTitle(amazonTitle);
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.byDefault();
+        try
+        {
+            File jsonSchemaFile = new File("src\\main\\resources\\schemas\\amazonJsonSchema.json");
+            URI uri = jsonSchemaFile.toURI();
+
+            JsonNode jsonNode = objectMapper.valueToTree(amazonTitle);
+            JsonSchema jsonSchema = jsonSchemaFactory.getJsonSchema(uri.toString());
+            ProcessingReport validationResult = jsonSchema.validate(jsonNode);
+
+            if (validationResult.isSuccess())
+            {
+                System.out.println("Validation successful");
+                this.amazonTitlesService.createAmazonTitle(amazonTitle);
+            }
+            else
+            {
+                validationResult.forEach(vm -> System.out.println(vm.getMessage()));
+            }
+        }
+        catch (ProcessingException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @GetMapping(value = "/{id}")

@@ -4,6 +4,7 @@ create TABLE IF NOT EXISTS amazon_main (
     year_of_release INT NOT NULL,
     number_of_seasons INT NOT NULL,
     available_language VARCHAR(255) NOT NULL,
+    genres VARCHAR(255) NOT NULL,
     imdb_rating DOUBLE NOT NULL,
     age_of_viewers VARCHAR(255) NOT NULL
 

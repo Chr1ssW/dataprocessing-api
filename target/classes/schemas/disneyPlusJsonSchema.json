@@ -22,7 +22,24 @@
       ]
     },
     "rated": {
-      "type": "string"
+      "type": "string",
+      "enum": [
+        "Approved",
+        "APPROVED",
+        "G",
+        "N/A",
+        "Not Rated",
+        "NOT RATED",
+        "Passed",
+        "PASSED",
+        "PG",
+        "PG-13",
+        "TV-14",
+        "TV-Y",
+        "TV-Y7-FV",
+        "UNRATED",
+        "Unrated"
+      ]
     },
     "createdYear": {
       "type": "integer",
