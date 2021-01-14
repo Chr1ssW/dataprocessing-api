@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.CHR1SSW.services.Amazon.AmazonTitlesService;
 import org.CHR1SSW.tables.Amazon.AmazonTitles;
-import org.CHR1SSW.tables.Netflix.NetflixTitles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

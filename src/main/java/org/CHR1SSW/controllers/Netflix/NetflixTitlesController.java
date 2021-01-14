@@ -87,6 +87,7 @@ public class NetflixTitlesController
 
             if (validationResult.isSuccess())
             {
+                System.out.println("Validation for JSON was successful.");
                 return true;
             }
             else
