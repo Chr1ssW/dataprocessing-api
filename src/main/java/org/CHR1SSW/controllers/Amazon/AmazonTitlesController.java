@@ -2,6 +2,7 @@ package org.CHR1SSW.controllers.Amazon;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchema;
@@ -11,12 +12,22 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.CHR1SSW.services.Amazon.AmazonTitlesService;
 import org.CHR1SSW.tables.Amazon.AmazonTitles;
+import org.CHR1SSW.tables.Netflix.NetflixTitles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.xml.sax.SAXException;
 
+import javax.xml.XMLConstants;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping(value = "/amazonTitles")
@@ -25,37 +36,75 @@ public class AmazonTitlesController
 {
     @Autowired
     AmazonTitlesService amazonTitlesService;
+    private final File xmlSchemaFile = new File("src\\main\\resources\\schemas\\amazonXmlSchema.xsd");
+    private final File jsonSchemaFile = new File("src\\main\\resources\\schemas\\amazonJsonSchema.json");
 
+    protected boolean xmlValidator(AmazonTitles amazonTitle)
+    {
+        try
+        {
+            XmlMapper xmlMapper = new XmlMapper();
+            SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            String xml;
+            xml = "<?xml version='1.0' encoding='utf-8'?>\n" +
+                    "<AmazonTitlesAll xmlns=\"https://www.w3schools.com\" " +
+                    " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
+                    " xsi:schemaLocation=\"https://www.w3schools.com netflixXmlSchema.xsd\">";
+            xml += xmlMapper.writeValueAsString(amazonTitle);
+            xml += "</AmazonTitlesAll>";
 
-    @PostMapping(value = "")
-    @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "Creates an amazon title")
-    public void createAmazonTitle(@RequestBody AmazonTitles amazonTitle)
+            Schema schema = factory.newSchema(xmlSchemaFile);
+
+            Validator validator = schema.newValidator();
+            validator.validate(new StreamSource(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8))));
+
+            System.out.println("Validation for XML was successful.");
+            return true;
+        }
+        catch (IOException | SAXException e)
+        {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private boolean jsonValidator(AmazonTitles amazonTitle)
     {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.byDefault();
         try
         {
-            File jsonSchemaFile = new File("src\\main\\resources\\schemas\\amazonJsonSchema.json");
             URI uri = jsonSchemaFile.toURI();
-
             JsonNode jsonNode = objectMapper.valueToTree(amazonTitle);
             JsonSchema jsonSchema = jsonSchemaFactory.getJsonSchema(uri.toString());
             ProcessingReport validationResult = jsonSchema.validate(jsonNode);
 
             if (validationResult.isSuccess())
             {
-                System.out.println("Validation successful");
-                this.amazonTitlesService.createAmazonTitle(amazonTitle);
+                System.out.println("Validation for JSON was successful.");
+                return true;
             }
             else
             {
                 validationResult.forEach(vm -> System.out.println(vm.getMessage()));
+                return false;
             }
-        }
-        catch (ProcessingException e)
+        } catch (ProcessingException e)
         {
             e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @PostMapping(value = "")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Creates an amazon title if validation passes.")
+    public void createAmazonTitle(@RequestBody AmazonTitles amazonTitle)
+    {
+        if (jsonValidator(amazonTitle) && xmlValidator(amazonTitle))
+        {
+            amazonTitlesService.createAmazonTitle(amazonTitle);
         }
     }
 

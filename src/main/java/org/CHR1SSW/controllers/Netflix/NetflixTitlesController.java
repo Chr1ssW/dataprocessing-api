@@ -59,8 +59,6 @@ public class NetflixTitlesController
             xml += xmlMapper.writeValueAsString(netflixTitle);
             xml += "</NetflixTitlesAll>";
 
-            System.out.println(xml);
-
             Schema schema = factory.newSchema(xmlSchemaFile);
 
             Validator validator = schema.newValidator();
