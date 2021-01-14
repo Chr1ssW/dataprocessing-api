@@ -59,7 +59,7 @@ public class AmazonTitlesController
         }
     }
 
-    @GetMapping(value = "/{id}&format=json")
+    @GetMapping(value = "/id={id}&format=json")
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Returns one amazon title based on ID in JSON format.")
     public AmazonTitles getAmazonTitleJson(@ApiParam(value = "The id of the amazon title", required = true)
@@ -68,7 +68,7 @@ public class AmazonTitlesController
         return this.amazonTitlesService.getAmazonTitle(id);
     }
 
-    @GetMapping(value = "/{id}&format=xml", produces = {"application/xml"})
+    @GetMapping(value = "/id={id}&format=xml", produces = {"application/xml"})
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Returns one amazon title based on ID in XML format.")
     public AmazonTitles getAmazonTitleXml(@ApiParam(value = "The id of the amazon title", required = true)
@@ -77,7 +77,7 @@ public class AmazonTitlesController
         return this.amazonTitlesService.getAmazonTitle(id);
     }
 
-    @GetMapping(value = "/{title}&format=xml", produces = {"application/xml"})
+    @GetMapping(value = "/title={title}&format=xml", produces = {"application/xml"})
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Returns one amazon movie based on title in XML format.")
     public AmazonTitles getAmazonTitleByTitleXml(@ApiParam(value = "The title of the Amazon movie", required = true)
@@ -86,7 +86,7 @@ public class AmazonTitlesController
         return this.amazonTitlesService.getAmazonTitleByNameOfTheShow(title);
     }
 
-    @GetMapping(value = "/{title}&format=json")
+    @GetMapping(value = "/title={title}&format=json")
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Returns one amazon movie based on title in JSON format.")
     public AmazonTitles getAmazonTitleByTitleJson(@ApiParam(value = "The title of the Amazon movie", required = true)
@@ -111,7 +111,7 @@ public class AmazonTitlesController
         return this.amazonTitlesService.getAmazonTitles();
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/id={id}")
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Updates an amazon title.")
     public void updateAmazonTitle(@ApiParam(value = "An amazon title", required = true)
@@ -124,7 +124,7 @@ public class AmazonTitlesController
         }
     }
 
-    @DeleteMapping(value = {"/{id}"})
+    @DeleteMapping(value = {"/id={id}"})
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Deletes an amazon title.")
     public void deleteAmazonTitle(@ApiParam(value = "An amazon title", required = true)

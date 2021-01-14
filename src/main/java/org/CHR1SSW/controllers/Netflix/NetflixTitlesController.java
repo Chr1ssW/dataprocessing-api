@@ -1,8 +1,10 @@
 package org.CHR1SSW.controllers.Netflix;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchema;
@@ -18,9 +20,19 @@ import org.CHR1SSW.tables.Netflix.NetflixTitles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.xml.sax.SAXException;
+import sun.nio.ch.Net;
 
+import javax.xml.XMLConstants;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -30,36 +42,76 @@ public class NetflixTitlesController
 {
     @Autowired
     NetflixTitlesService netflixTitlesService;
+    private final File xmlSchemaFile = new File("src\\main\\resources\\schemas\\netflixXmlSchema.xsd");
+    private final File jsonSchemaFile = new File("src\\main\\resources\\schemas\\netflixJsonSchema.json");
+
+    protected boolean xmlValidator(NetflixTitles netflixTitle)
+    {
+        try
+        {
+            XmlMapper xmlMapper = new XmlMapper();
+            SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            String xml;
+            xml = "<?xml version='1.0' encoding='utf-8'?>\n" +
+                    "<NetflixTitlesAll xmlns=\"https://www.w3schools.com\" " +
+                    " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
+                    " xsi:schemaLocation=\"https://www.w3schools.com netflixXmlSchema.xsd\">";
+            xml += xmlMapper.writeValueAsString(netflixTitle);
+            xml += "</NetflixTitlesAll>";
+
+            System.out.println(xml);
+
+            Schema schema = factory.newSchema(xmlSchemaFile);
+
+            Validator validator = schema.newValidator();
+            validator.validate(new StreamSource(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8))));
+
+            System.out.println("Validation for XML was successful.");
+            return true;
+        }
+        catch (IOException | SAXException e)
+        {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private boolean jsonValidator(NetflixTitles netflixTitle)
+    {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.byDefault();
+        try
+        {
+            URI uri = jsonSchemaFile.toURI();
+            JsonNode jsonNode = objectMapper.valueToTree(netflixTitle);
+            JsonSchema jsonSchema = jsonSchemaFactory.getJsonSchema(uri.toString());
+            ProcessingReport validationResult = jsonSchema.validate(jsonNode);
+
+            if (validationResult.isSuccess())
+            {
+                return true;
+            }
+            else
+            {
+                validationResult.forEach(vm -> System.out.println(vm.getMessage()));
+                return false;
+            }
+        } catch (ProcessingException e)
+        {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 
     @PostMapping(value = "")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Creates a new Netflix title if validation passes")
     public void createNetflixTitle(@RequestBody NetflixTitles netflixTitles)
     {
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.byDefault();
-        try
+        if (jsonValidator(netflixTitles) && xmlValidator(netflixTitles))
         {
-            File jsonSchemaFile = new File("src\\main\\resources\\schemas\\netflixJsonSchema.json");
-            URI uri = jsonSchemaFile.toURI();
-
-            JsonNode jsonNode = objectMapper.valueToTree(netflixTitles);
-            JsonSchema jsonSchema = jsonSchemaFactory.getJsonSchema(uri.toString());
-            ProcessingReport validationResult = jsonSchema.validate(jsonNode);
-
-            if (validationResult.isSuccess())
-            {
-                System.out.println("Validation successful");
-                this.netflixTitlesService.createNetflixTitle(netflixTitles);
-            }
-            else
-            {
-                validationResult.forEach(vm -> System.out.println(vm.getMessage()));
-            }
-        }
-        catch (ProcessingException e)
-        {
-            e.printStackTrace();
+            this.netflixTitlesService.createNetflixTitle(netflixTitles);
         }
     }
 

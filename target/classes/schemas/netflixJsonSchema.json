@@ -11,7 +11,8 @@
       "type": "string",
       "enum": [
         "Movie",
-        "Series"
+        "Series",
+        "TV show"
       ]
     },
     "title": {

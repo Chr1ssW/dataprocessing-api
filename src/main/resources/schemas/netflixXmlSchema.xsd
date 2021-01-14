@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xS="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="https://www.w3schools.com"
+           elementFormDefault="qualified"
+           xmlns="https://www.w3schools.com">
+
+    <xs:simpleType name="ShowIdDesc">
+        <xs:restriction base="xs:integer">
+            <xs:minExclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="TypeList">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Movie"/>
+            <xs:enumeration value="Series"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="DurationDesc">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([1-9][0-9]{0,2}) ((min)|(season))"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="ReleaseYearDesc">
+        <xs:restriction base="xs:gYear">
+            <xs:minInclusive value="1900"/>
+            <xs:maxInclusive value="2020"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="DateAddedDesc">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="January(\s){1}([1-9]|1[0-9]|2[0-9]|3[01]),(\s){1}((19[0-9][0-9])|20[01][0-9]|2020)" />
+            <xs:pattern value="February(\s){1}([1-9]|1[0-9]|2[0-9]),(\s){1}((19[0-9][0-9])|20[01][0-9]|2020)"/>
+            <xs:pattern value="March(\s){1}([1-9]|1[0-9]|2[0-9]|3[01]),(\s){1}((19[0-9][0-9])|20[01][0-9]|2020)"/>
+            <xs:pattern value="April(\s){1}([1-9]|1[0-9]|2[0-9]|3[01]),(\s){1}((19[0-9][0-9])|20[01][0-9]|2020)"/>
+            <xs:pattern value="May(\s){1}([1-9]|1[0-9]|2[0-9]|3[01]),(\s){1}((19[0-9][0-9])|20[01][0-9]|2020)"/>
+            <xs:pattern value="June(\s){1}([1-9]|1[0-9]|2[0-9]|3[01]),(\s){1}((19[0-9][0-9])|20[01][0-9]|2020)"/>
+            <xs:pattern value="July(\s){1}([1-9]|1[0-9]|2[0-9]|3[01]),(\s){1}((19[0-9][0-9])|20[01][0-9]|2020)"/>
+            <xs:pattern value="August(\s){1}([1-9]|1[0-9]|2[0-9]|3[01]),(\s){1}((19[0-9][0-9])|20[01][0-9]|2020)"/>
+            <xs:pattern value="September(\s){1}([1-9]|1[0-9]|2[0-9]|3[01]),(\s){1}((19[0-9][0-9])|20[01][0-9]|2020)"/>
+            <xs:pattern value="October(\s){1}([1-9]|1[0-9]|2[0-9]|3[01]),(\s){1}((19[0-9][0-9])|20[01][0-9]|2020)"/>
+            <xs:pattern value="November(\s){1}([1-9]|1[0-9]|2[0-9]|3[01]),(\s){1}((19[0-9][0-9])|20[01][0-9]|2020)"/>
+            <xs:pattern value="December(\s){1}([1-9]|1[0-9]|2[0-9]|3[01]),(\s){1}((19[0-9][0-9])|20[01][0-9]|2020)"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="RatingList">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="G"/>
+            <xs:enumeration value="NC-17"/>
+            <xs:enumeration value="NR"/>
+            <xs:enumeration value="PG"/>
+            <xs:enumeration value="PG-13"/>
+            <xs:enumeration value="R"/>
+            <xs:enumeration value="TV-14"/>
+            <xs:enumeration value="TV-G"/>
+            <xs:enumeration value="TV-MA"/>
+            <xs:enumeration value="TV-PG"/>
+            <xs:enumeration value="TV-Y7"/>
+            <xs:enumeration value="TV-Y7-FV"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="NetflixTitlesDesc" >
+            <xs:sequence>
+                <xs:element name="showId" type="ShowIdDesc" />
+                <xs:element name="movieType" type="TypeList" />
+                <xs:element name="title" type="xs:string" />
+                <xs:element name="description"  type="xs:string" />
+                <xs:element name="releaseYear"  type="ReleaseYearDesc" />
+                <xs:element name="dateAdded"  type="DateAddedDesc" />
+                <xs:element name="duration" type="DurationDesc" />
+                <xs:element name="rating" type="RatingList" />
+                <xs:element name="director" type="xs:string" />
+                <xs:element name="actors" type="xs:string" />
+                <xs:element name="categories" type="xs:string" />
+                <xs:element name="country" type="xs:string" />
+            </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="NetflixTitlesAll">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="NetflixTitles" type="NetflixTitlesDesc"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
