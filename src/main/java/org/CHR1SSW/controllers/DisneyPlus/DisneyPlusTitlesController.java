@@ -36,8 +36,8 @@ import java.util.List;
 public class DisneyPlusTitlesController {
     @Autowired
     DisneyPlusTitlesService disneyPlusTitlesService;
-    private final File xmlSchemaFile = new File("src\\main\\resources\\schemas\\netflixXmlSchema.xsd");
-    private final File jsonSchemaFile = new File("src\\main\\resources\\schemas\\netflixJsonSchema.json");
+    private final File xmlSchemaFile = new File("src\\main\\resources\\schemas\\disneyPlusXmlSchema.xsd");
+    private final File jsonSchemaFile = new File("src\\main\\resources\\schemas\\disneyPlusJsonSchema.json");
 
     protected boolean xmlValidator(DisneyPlusTitles disneyPlusTitles) {
         try {
@@ -97,7 +97,7 @@ public class DisneyPlusTitlesController {
         }
     }
 
-    @GetMapping(value = "/id={id}&format=json")
+    @GetMapping(value = "/id={id}&format=json", produces = {"application/json"})
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Returns one Disney+ title based on ID in JSON format.")
     public DisneyPlusTitles getDisneyPlusTitleJson(@ApiParam(value = "The id of the Disney+ title", required = true)
@@ -113,7 +113,7 @@ public class DisneyPlusTitlesController {
         return disneyPlusTitlesService.getDisneyPlusTitle(id);
     }
 
-    @GetMapping(value = "/format=json")
+    @GetMapping(value = "/format=json", produces = {"application/json"})
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Returns all the Disney+ titles in JSON format.")
     public List<DisneyPlusTitles> getAllDisneyPlusTitlesJson() {
@@ -128,7 +128,7 @@ public class DisneyPlusTitlesController {
     }
 
 
-    @GetMapping(value = "/title={title}&format=json")
+    @GetMapping(value = "/title={title}&format=json", produces = {"application/json"})
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Returns Disney+ movies based on title in JSON format.")
     public List<DisneyPlusTitles> getDisneyPlusByTitleJson(@ApiParam(value = "The title of the Disney+ movie", required = true)

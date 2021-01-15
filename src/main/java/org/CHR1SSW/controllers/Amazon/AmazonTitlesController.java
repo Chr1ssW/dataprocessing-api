@@ -107,7 +107,7 @@ public class AmazonTitlesController
         }
     }
 
-    @GetMapping(value = "/id={id}&format=json")
+    @GetMapping(value = "/id={id}&format=json", produces = {"application/json"})
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Returns one amazon title based on ID in JSON format.")
     public AmazonTitles getAmazonTitleJson(@ApiParam(value = "The id of the amazon title", required = true)
@@ -134,7 +134,7 @@ public class AmazonTitlesController
         return this.amazonTitlesService.getAmazonTitleByNameOfTheShow(title);
     }
 
-    @GetMapping(value = "/title={title}&format=json")
+    @GetMapping(value = "/title={title}&format=json", produces = {"application/json"})
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Returns one amazon movie based on title in JSON format.")
     public AmazonTitles getAmazonTitleByTitleJson(@ApiParam(value = "The title of the Amazon movie", required = true)
@@ -143,7 +143,7 @@ public class AmazonTitlesController
         return this.amazonTitlesService.getAmazonTitleByNameOfTheShow(title);
     }
 
-    @GetMapping(value = "/format=json")
+    @GetMapping(value = "/format=json", produces = {"application/json"})
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Returns all amazon titles in JSON format.")
     public Iterable<AmazonTitles> getAmazonTitleJson()

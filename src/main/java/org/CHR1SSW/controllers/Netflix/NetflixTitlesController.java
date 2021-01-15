@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.xml.sax.SAXException;
-import sun.nio.ch.Net;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
@@ -114,7 +113,7 @@ public class NetflixTitlesController
         }
     }
 
-    @GetMapping(value = "/showId={showId}")
+    @GetMapping(value = "/showId={showId}", produces = {"application/json"})
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Returns one Netflix title based on ID in JSON format.")
     public NetflixTitles getNetflixTitleJson(@ApiParam(value = "The id of the netflix title", required = true)
@@ -132,7 +131,7 @@ public class NetflixTitlesController
         return netflixTitlesService.getNetflixTitle(showId);
     }
 
-    @GetMapping(value = "/title={title}&format=json")
+    @GetMapping(value = "/title={title}&format=json", produces = {"application/json"})
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Returns one Netflix show based on the title in JSON format.")
     public NetflixTitles getNetflixByTitleJson(@ApiParam(value = "The title of the netflix title", required = true)
@@ -150,7 +149,7 @@ public class NetflixTitlesController
         return netflixTitlesService.getNetflixByTitle(title);
     }
 
-    @GetMapping(value = "/format=json")
+    @GetMapping(value = "/format=json", produces = {"application/json"})
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "Returns all the Netflix titles in JSON format.")
     public List<NetflixTitles> getAllNetflixTitlesJson()

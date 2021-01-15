@@ -42,7 +42,7 @@ public class SwaggerConfig
                 .description(description)
                 .license("Unlicensed")
                 .licenseUrl("")
-                .version("0.4.0")
+                .version("1.0.0")
                 .build();
     }
 }
